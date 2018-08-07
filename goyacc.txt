@@ -1,0 +1,1 @@
+goyacc -p asyncpi -o parser.y.go asyncpi.y

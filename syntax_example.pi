@@ -1,0 +1,7 @@
+(new ch)    # Create a new channel ch
+(
+  ch<a>     # Send on channel ch with a as parameter
+  |         # Parallel composition - think spawn goroutine
+  ch(x)     # Receive x on channel ch
+   .0       # End of process (receive always have continuation)
+)

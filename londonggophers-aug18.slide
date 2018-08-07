@@ -1,0 +1,200 @@
+Building a simple concurrency teaching language with Go
+15 Aug 2018
+
+Nicholas Ng
+Imperial College London
+nickng@nickng.io
+@nicholascwng
+
+* About me
+
+Postdoc @ Imperial College
+
+- Formal concurrency models
+- Programming languages: types and static analysis/verification
+
+* Concurrency @ IC
+
+- Model, analyse, program concurrent systems
+- Concurrency issues (deadlock etc.)
+
+Disclaimer - course is not directly related to talk
+
+* Formal models of concurrency
+
+The actor model
+
+- Proposed by Carl Hewitt; foundation of Erlang/Elixir
+- Concurrent *actors* react to incoming message
+
+Process calculi
+
+- Family of related models with many variants
+- Most well known: Hoare's CSP, Milner's CCS and π-calculus
+- Concurrent *processes* synchronise by communication (message passing)
+
+Alternatives
+
+- e.g. Petri nets
+
+* Formal concurrency models vs. Concurrent programming
+
+Formal concurrency models
+
+- Abstract
+- Pen and paper
+
+Concurrent programming
+
+- Concrete language
+- Executable
+
+🤔 Executable formal model?
+
+* asyncpi: A teaching language based on "asynchronous π-calculus"
+
+.link http://go.nickng.io/asyncpi
+
+.image pi.png
+.caption The asynchronous π-calculus (Honda, Tokoro 1991; Boudol 1992)
+
+Objectives
+
+- Write down machine-readable formal processes
+- Explore how processes evolve (through communication)
+- Generate example concurrent code in Go
+
+* This talk
+
+- asyncpi is just an example
+- Implement a small (executable) domain-specific language
+- Tools and packages that I find useful
+
+* The asyncpi language
+
+.code grammar.txt
+
+A *grammar* specifies the syntax of the language, e.g.
+
+.code syntax_example.pi
+
+Objective: make this input machine-readable
+
+* Parsing
+
+Read stream of symbols of given grammar into code (e.g. _abstract_syntax_tree_ (AST))
+
+.play parse_syntax.go /^func main/,/^}/
+
+Implement Parse by fmt.Scanf?
+
+* golang.org/x/tools/cmd/goyacc
+
+*yacc* (Yet Another Compiler-Compiler) is a _parser_generator_
+
+- Input: grammar, output: parser
+- Your code convert valid parsed input to your representation (e.g. AST)
+- Not just for "languages", config files, structured data files, etc.
+- *goyacc* is a Go port of the tool
+
+.link https://github.com/nickng/asyncpi/blob/master/asyncpi.y
+.code goyacc.txt
+
+More about parsing with Go
+
+.link https://blog.golang.org/generate Generating code (The Go blog)
+.link https://blog.gopheracademy.com/advent-2014/parsers-lexers/ Handwritten Parsers & Lexers in Go (Gopher Academy)
+
+* go generate
+
+- Part of the go tool chain
+- Runs an _arbitrary_ command (does not have to generate code!)
+
+Instead of
+
+.code goyacc.sh
+
+Put this in a .go file:
+
+.code goyacc.go
+
+* Objectives
+
+- Write down machine-readable formal process ✔️
+- Explore how processes evolve (through communication)
+- Generate example concurrent code in Go
+
+* Process reduction
+
+- What we parsed: snapshot of concurrent system
+- _Communicate_ if shared channel exists
+- Evolve system by _reducing_ both sub-processes
+
+.image reduction.svg
+
+We can write code to *reduce* in Go..
+
+* Process reduction
+
+- What we parsed: snapshot of concurrent system
+- _Communicate_ if shared channel exists
+- Evolve system by _reducing_ both sub-processes
+
+.play -edit sendrecv_reduce.go /^func main/,/^}/
+
+* Play with processes in Go
+
+.play sendrecv_reduce2.go /^func main/,/^}/
+
+* Objectives
+
+- Write down machine-readable formal process ✔️
+- Explore how process evolve (through communication) ✔️
+- Generate example concurrent code in Go
+
+* Generate Go code from asyncpi
+
+.play sendrecv_codegen.go /^func main/,/^}/
+
+- Not very sophisticated (uses text/template package)
+- A bit ugly..
+
+* go/format package
+
+Every Go programmer should know "gofmt"
+
+You can also use go/format to format Go code (snippets)
+
+.play -edit sendrecv_gofmt.go /^func main/,/^}/
+
+* golang.org/x/tools/imports package
+
+You can also use imports to fix imports
+
+.play -edit sendrecv_goimports.go /^func main/,/^}/
+
+* Another use of generating Go code
+
+- Both `sendrecv` and `chainReaction` processes reduce to 0
+- What if it doesn't?
+
+.play sendrecvrecv.go /^func main/,/^}/
+
+* Objectives
+
+- Write down machine-readable formal process ✔️
+- Explore how processes evolve (through communication) ✔️
+- Generate example concurrent code in Go ✔️
+
+* Summary
+
+- A concurrency teaching language called asyncpi
+- Parse asyncpi process into Go program
+- Programmatically use the process
+- Generate and format Go code and gofmt way
+
+* More?
+
+- REPL
+- Channel types and type inference (Hindley-Milner)
+- Formal model to Go code _and_back_
