@@ -26,8 +26,8 @@ func main() {
 	}
 	fmt.Printf("Before reduction:\n\t%s\n", proc.Calculi())
 
-	// Reduce system for a single step
-	asyncpi.Reduce1(proc)
+	// Reduce system for a single step // HL
+	asyncpi.Reduce1(proc) // HL
 
 	fmt.Printf("After reduction:\n\t%s\n", proc.Calculi())
 }

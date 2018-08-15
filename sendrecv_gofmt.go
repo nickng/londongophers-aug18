@@ -24,7 +24,7 @@ const sendrecv = `
     )`
 
 func main() {
-	// import "go/format"
+	// import "go/format" // HL
 
 	var gocode bytes.Buffer
 	err := golang.Generate(mustParse(sendrecv), &gocode)
@@ -32,7 +32,7 @@ func main() {
 		// handle error
 	}
 
-	formatted, err := format.Source(gocode.Bytes())
+	formatted, err := format.Source(gocode.Bytes()) // HL
 	if err != nil {
 		// handle error
 	}

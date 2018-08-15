@@ -29,7 +29,7 @@ var withMain = golang.FormatOptions{
 }
 
 func main() {
-	// import "golang.org/x/tools/imports"
+	// import "golang.org/x/tools/imports" // HL
 
 	var gocode bytes.Buffer
 	err := golang.GenerateOpts(mustParse(sendrecv), withMain, &gocode)
@@ -37,8 +37,8 @@ func main() {
 		// handle error
 	}
 
-	opts := &imports.Options{TabIndent: true, Fragment: false, Comments: true}
-	generated, err := imports.Process("/tmp/main.go", gocode.Bytes(), opts)
+	opts := &imports.Options{TabIndent: true, Fragment: false, Comments: true} // HL
+	generated, err := imports.Process("/tmp/main.go", gocode.Bytes(), opts)    // HL
 	if err != nil {
 		// handle error
 	}

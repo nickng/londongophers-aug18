@@ -23,7 +23,7 @@ func main() {
 	proc := mustParse(sendrecv)
 
 	var gocode bytes.Buffer
-	if err := golang.Generate(proc, &gocode); err != nil {
+	if err := golang.Generate(proc, &gocode); err != nil { // HL
 		// handle error
 	}
 	fmt.Println(gocode.String())

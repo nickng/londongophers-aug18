@@ -82,7 +82,7 @@ Objective: make this input machine-readable
 
 * Parsing
 
-Read stream of symbols of given grammar into code (e.g. _abstract_syntax_tree_ (AST))
+Read stream of symbols of given grammar into abstract syntax tree
 
 .play parse_syntax.go /^func main/,/^}/
 
@@ -157,7 +157,7 @@ We can write code to *reduce* in Go..
 .play sendrecv_codegen.go /^func main/,/^}/
 
 - Not very sophisticated (uses text/template package)
-- A bit ugly..
+- Not idiomatic Go
 
 * go/format package
 

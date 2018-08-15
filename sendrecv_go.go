@@ -16,7 +16,7 @@ func main() {
 		return x
 	}
 
-	ch := make(chan struct{}) // (new ch)
-	go left(ch)               //   (  ch<a> |
-	right(ch)                 //      ch(x).0 )
+	ch := make(chan struct{}) // (new ch) // HL
+	go left(ch)               //   (  ch<a> | // HL
+	right(ch)                 //      ch(x).0 ) // HL
 }

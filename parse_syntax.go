@@ -20,7 +20,7 @@ func main() {
    .0       # End of process (receive always have continuation)
 )`
 
-	process, err := asyncpi.Parse(strings.NewReader(example))
+	process, err := asyncpi.Parse(strings.NewReader(example)) // HL
 	if err != nil {
 		log.Fatal("parse failed:", err)
 	}

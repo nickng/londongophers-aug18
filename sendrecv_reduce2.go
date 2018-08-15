@@ -21,18 +21,18 @@ func main() {
 
 	fmt.Println(proc.Calculi())
 	// Keep reducing until not possible
-	for {
-		changed, err := asyncpi.Reduce1(proc)
+	for { // HL
+		changed, err := asyncpi.Reduce1(proc) // HL
 		if err != nil {
 			log.Fatal("reduction error", err) // handle errors
 			break
 		}
-		if !changed {
-			break
-		}
+		if !changed { // HL
+			break // HL
+		} // HL
 		proc, _ = asyncpi.SimplifyBySC(proc)
 		fmt.Println("→ Reduces to:", proc.Calculi())
-	}
+	} // HL
 }
 
 func mustParse(s string) asyncpi.Process {
